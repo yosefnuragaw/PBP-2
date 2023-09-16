@@ -3,17 +3,6 @@ Nama    : Yosef Nuraga Wicaksana
 NPM     : 2206082751
 Kelas   : PBP C
 
-
-
-# Membuat sebuah proyek Django baru.
-1. Membuat sebuah direktori baru sebagai tempat proyek Django.
-2. Membuka CMD dengan *path* direktori tersebut dan membuat *virtual environment* dengan `python -m venv env`
-3. Mengaktifkan *virtual environment* dengan `env\Scripts\activate.bat` di CMD
-4. Buat sebuah *file* untuk menentukan syarat *dependencies* seperti Nama        : Clement Samuel Marly
-NPM         : 2206082114
-Kelas       : PBP C
-Adaptable   : https://gamestock.adaptable.app/main/
-
 # Membuat sebuah proyek Django baru.
 1. Membuat direktori baru untuk proyek Django baru.
 2. Buka command prompt di direktori tersebut dan jalankan perintah `python -m venv env` untuk membuat virtual environment untuk Python. Environment akan mengisolasi package dan *dependencies* dari aplikasi sehingga tidak konflik dengan versi lain.
