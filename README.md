@@ -80,7 +80,10 @@ def show_main(request):
 8. Masukkan nama aplikasi lalu pilih `HTTP Listener on PORT` dan  `Deploy App` untuk melakukan *deployment*.
 
 
-# 2
+# Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+![MVT Design Architecture](https://github.com/yosefnuragaw/PBP-2/blob/main/MVT_Architecture_Tugas2.png)
+
+Cara kerja ketiga bagian dalam arsitektur tersebut dimulai dengan pengguna yang mengirimkan HTTP request yang kemudian diolah oleh `urls.py` yang melakukan mapping kepada `views.py`. `views.py` akan mengirimkan permintaan kepada model untuk mengolah permintaan dari pengguna kemudian merender berkas `html` yang berada dalam direktori `Template` untuk dikirimkan kembali pada pengguna sehingga hasila dari permintaan tersebut dapat dilihat oleh pengguna.
 
 # Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 *Virtual environment* merupakan sebuah alat dalam pekerjaan development yang mengisolasi proyek yang dibuatsehingga memudahkan para *developer* untuk mengatur *dependencies* yang digunakan dalam proyek tersebut. Berikut merupakan rincian manfaat dari *Virtual Environment*.
