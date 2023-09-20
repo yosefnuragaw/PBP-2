@@ -312,3 +312,15 @@ def show_json_by_id(request, id):
     
 {% endblock content %}
 ```
+
+## Screenshot
+### localhost/8000
+!["Base"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/base.png)
+### localhost/8000/json
+!["json"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/json.png)
+### localhost/8000/json/id
+!["json_id"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/json_id.png)
+### localhost/8000/xml
+!["xml"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/xml.png)
+### localhost/8000/xml/id
+!["xml_id"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/xml_id.png)
