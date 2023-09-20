@@ -150,7 +150,7 @@ sumber: https://www.oracle.com/id/database/what-is-json/#:~:text=readable%20JSON
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 1. Membuat direktori templates dengan file yakni `base.html` yang berisi kode berikut
-'''html
+```html
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -169,7 +169,7 @@ sumber: https://www.oracle.com/id/database/what-is-json/#:~:text=readable%20JSON
         {% endblock content %}
     </body>
 </html>
-'''
+```
 
 2. Buka `settings.py` pada direktori project dan mengubah potongan kode berikut.
 ``` python
