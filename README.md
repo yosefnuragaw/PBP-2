@@ -147,3 +147,168 @@ Sumber: https://www.deltaxml.com/blog/xml/whats-the-relationship-between-xml-jso
 6. Memiliki kompabilitas dengan seluruh browser dan operating systemnya karena memiliki JSON Parser
 
 sumber: https://www.oracle.com/id/database/what-is-json/#:~:text=readable%20JSON%20file.-,Why%20JSON%20is%20popular%20with%20developers,no%20additional%20code%20for%20parsing.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+1. Membuat direktori templates dengan file yakni `base.html` yang berisi kode berikut
+'''html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        {% block meta %}
+        {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>
+'''
+
+2. Buka `settings.py` pada direktori project dan mengubah potongan kode berikut.
+``` python
+...
+TEMPLATES = [
+    {
+        ...
+        'DIRS': [BASE_DIR / 'templates'], # Tambahkan kode ini
+        ...
+    }
+]
+...
+```
+
+3. Membuat `forms.py` pada subdirektori main yang berisi kode berikut.
+``` python 
+from django.forms import ModelForm
+from main.models import Product
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "price", "description"]
+```
+4. Tambahkan beberapa fungsi pada `views.py`
+``` python
+def show_main(request):
+    products = Product.objects.all()
+
+    context = {
+        'name': 'Yosef Nuraga Wicaksana', 
+        'class': 'PBP C', 
+        'products': products,
+        'stock' : products.count()
+    }
+
+    return render(request, "main.html", context)
+
+def create_product(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)
+
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_xml_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+```
+5. Tambahkan kode pada `urls.py` untuk mengarahkan ke fungsi pada `views.py`
+```python
+    path('', show_main, name='show_main'),
+    path('create-product', create_product, name='create_product'),
+    path('xml/', show_xml, name='show_xml'), 
+    path('json/', show_json, name='show_json'), 
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'), 
+```
+
+6. Tambahkan `create_product.html` pada `templates` di `main` sebagai tata letak input aplikasi yang berisi kode berikut.
+``` html
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1>Add New Product</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Product"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
+```
+7. Ubah `main.html` untuk menampilkan barang yang disimpan menjadi.
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>GAME STORE</h1>
+
+    <h5>Name:</h5>
+    <p>{{name}}</p>
+
+    <h5>Class:</h5>
+    <p>{{class}}</p>
+
+
+    <h5>Current Game Stock: {{stock}}</h5> <!--Bonus  Poin-->
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>
+    
+        {% comment %} Stok Game yang tersedia {% endcomment %}
+    
+        {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.date_added}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <br />
+    
+    <a href="{% url 'main:create_product' %}">
+        <button>
+            Add New Product
+        </button>
+    </a>
+    
+{% endblock content %}
+```
