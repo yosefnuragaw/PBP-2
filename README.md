@@ -3,11 +3,11 @@ Nama    : Yosef Nuraga Wicaksana
 NPM     : 2206082751
 Kelas   : PBP C
 
-[Tugas 2](#Tugas-2-Pemrograman-Berbasis-Platform-2022/2023)
-[Tugas 3](#Tugas-3-Pemrograman-Berbasis-Platform-2022/2023)
+[Tugas 2](#tugas-2)
+[Tugas 3](#tugas-3)
 
 
-# Tugas 2 Pemrograman Berbasis Platform 2022/2023
+# Tugas 2 
 ## Membuat sebuah proyek Django baru.
 1. Membuat direktori baru untuk proyek Django baru.
 2. Buka command prompt di direktori tersebut dan jalankan perintah `python -m venv env` untuk membuat virtual environment untuk Python. Environment akan mengisolasi package dan *dependencies* dari aplikasi sehingga tidak konflik dengan versi lain.
@@ -120,7 +120,7 @@ MVVM merupakan arsitektur yang dapat digunakan dalam pengembangan android. Arsit
 
 Perbedaan dari ketiga arsitektur iniadalah alur bagaimana menangani permintaan pengguna yang tentu saja memiliki kelebihan masing - masing dalam setiap case. Akan tetapi inti dari ketiga arsitektur tersebut adalah menerima  input pengguna untuk diolah menggunakan model dan disalurkan kembali kepada pengguna. Mengetahui perbedaan yang ada pada ketiga arsitektur tersebut maka diperlukan analisis mendalam mengenai aplikasi yang akan dibuat untuk menentukan arsitektur yang akan dipakai.
 
-# Tugas 3 Pemrograman Berbasis Platform 2022/2023
+# Tugas 3
 ## Apa perbedaan antara form POST dan form GET dalam Django?
 ### POST
 1. Pengiriman data di encode
