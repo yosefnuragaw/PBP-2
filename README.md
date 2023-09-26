@@ -5,6 +5,7 @@ Kelas   : PBP C
 
 [Tugas 2](#tugas-2)
 [Tugas 3](#tugas-3)
+[Tugas 4](#tugas-4)
 
 
 # Tugas 2 
@@ -329,3 +330,7 @@ def show_json_by_id(request, id):
 !["xml"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/xml.png)
 ### localhost/8000/xml/id
 !["xml_id"](https://github.com/yosefnuragaw/PBP-2/blob/main/image/xml_id.png)
+
+
+# Tugas 4
+ 

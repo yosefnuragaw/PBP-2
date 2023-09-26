@@ -2,13 +2,11 @@
 
 {% block content %}
     <h1>GAME STORE</h1>
-
+    
     <h5>Name:</h5>
     <p>{{name}}</p>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
-
+    <h5>Sesi terakhir login: {{last_login}}</h5>
 
     <h5>Current Game Stock: {{stock}}</h5> <!--Bonus  Poin-->
     <table>
@@ -36,6 +34,12 @@
     <a href="{% url 'main:create_product' %}">
         <button>
             Add New Product
+        </button>
+    </a>
+
+    <a href="{% url 'main:logout' %}">
+        <button>
+            Logout
         </button>
     </a>
     
