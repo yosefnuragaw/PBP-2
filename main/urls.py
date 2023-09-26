@@ -16,6 +16,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    #Bonus Tugas 4
     path('add/', add_product, name='add_product'),
     path('remove/', sell_product, name='sell_product'),
     path('delete/', remove_product, name='remove_product'),
