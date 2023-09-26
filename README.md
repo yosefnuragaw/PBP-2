@@ -607,3 +607,9 @@ def logout_user(request):
 ```html
 <h5>Sesi terakhir login: {{ last_login }}</h5>
 ```
+
+### Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.
+
+1. Melakukan register pada aplikasi
+2. Melakukan create_product sebanyak 3 kali
+3. Mungulangi tahap 1 dan 2 sebanyak 2 kali
