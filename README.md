@@ -334,3 +334,34 @@ def show_json_by_id(request, id):
 
 # Tugas 4
  
+## Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
+Django UserCreationForm merupakan formulir bawaan yang disediakan oleh Django untuk mempermudah proses pembuatan user baru dalam aplikasi web yang menggunakan Django. Class ini termasuk dalam modul django.contrib.auth.forms dan digunakan untuk mengumpulkan data yang diperlukan untuk membuat akun pengguna.
+Terdapat beberapa kelebihan dan kekurangan dalam menggunakan Django UserCreationForm, yakni:
+1. Mudah digunakan
+Bagi seorang developer aplikasi yang menggunakan Django, UserCreationForm sangat mempermudah developer dalam pembuatan alur register yang cepat dan mudah sehingga mempercepat proses pembuatan aplikasi
+2. Terintegrasi dengan sistem keamanan Django
+Password yang disimpan dari formulir ini akan di hash oleh django sehingga penyimpanan password dapat menjadi lebih aman
+3. Memiliki syarat validasi password
+Password pada formulir ini memiliki minimum jumlah kata dengan syarat beberapa karakter penting untuk harus tercantum pada password sehingga menjadi lebih kuat.
+
+Kekurangan:
+1. Hanya formulir standar
+UserCreationForum hanya menerima input username, email dan password. Apabila memerlukan input lain maka formulir perlu dicustom terlebih dahulu
+2. Tidak terverifikasi email
+Formulir ini hanya digunakan untuk menerima input sebagai pembuatan user dalam aplikasi, akan tetapi jika diperlukan langkah lebih lanjut seperti verifikasi email maka perogram perlu dikustomisasi lebih lanjut
+
+## Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+Autentikasi adalah langkah dalam memverifikasi pengguna apakah pengguna yang berusaha akses adalah pengguna itu sendiri. Dalam django, verifikasi dilakukan dengan memverifikasi credential beruapa username maupun kata
+Autentikasi adalah proses memverifikasi identitas pengguna. Ini memeriksa apakah pengguna yang mengakses aplikasi adalah orang yang mereka klaim. Dalam konteks Django, autentikasi biasanya melibatkan verifikasi bahwa kredensial (seperti nama pengguna dan kata sandi) yang dimasukkan oleh pengguna cocok dengan yang terdaftar di sistem dan diimplementasikan menggunakan modul django.contrib.auth. Sedangkan otorisasi merupakan pemberian hak akses pada user saat mengakses aplikasi yang dibuat. Hal ini dilakukan untuk membatasi akses pengguna pada website kita dengan contoh pengunjung hanya dapat melihat namun admin dapat mengubah - ubah file yang terdapat pada aplikasi.
+
+Kedua hal tersebut penting karena termasuk dalam sistem keamanan dalam Django untuk mengamankan data pengguna yang mengakses, kemudian menjaga kontrol pada aplikasi, serta mempermudah audit log aplikasi untuk mengecek jalnnya sistem aplikasi.
+
+ ## Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+Cookies adalah cara untuk menyimpan data kecil di sisi pengguna (browser) yang memungkinkan server untuk mengingat informasi penting antar kunjungan ke halaman web. Mereka sangat berguna dalam mengelola pengalaman pengguna, seperti menyediakan konten atau fungsionalitas yang sesuai dengan setiap pengguna yang terautentikasi. Selain itu, cookies juga memungkinkan penyimpanan preferensi pengguna, seperti bahasa atau tema tampilan favorit. Selain itu cookies juga sering digunakan untuk melacak aktivitas pengguna guna memahami bagaimana pengguna berinteraksi dengan situs web, yang penting dalam analisis dan pengembangan strategi untuk meningkatkan pengalaman pengguna oleh tim developer.
+
+Dalam Django, cookies user akan digunakan untuk mengidentifikasi pengguna dengan disimpan terlebih dahulu dan digunakan untuk melakukan query sesuai dengan otorisasi pengguna tersebut.
+
+ ## Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+
+ ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).

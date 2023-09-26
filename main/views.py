@@ -90,3 +90,41 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def add_product(request): #Bonus
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            product.amount += 1
+            product.save()
+        except Product.DoesNotExist:
+            pass
+
+    return redirect('main:show_main')
+
+def sell_product(request): #Bonus
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            product.amount -= 1
+            if product.amount == 0:
+                product.delete()
+            else:
+                product.save()
+        except Product.DoesNotExist:
+            pass
+
+    return redirect('main:show_main')
+
+def remove_product(request): #Bonus
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            product.delete()
+        except Product.DoesNotExist:
+            pass
+
+    return redirect('main:show_main')
