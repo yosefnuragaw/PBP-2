@@ -12,7 +12,7 @@
     <div class="row">
         {% for product in products %}
             <div class="col-md-4">
-                <div class="card product-card {% if forloop.last %}last-product{% endif %}">
+                <div class="card product-card {% if forloop.last %}last-product{% endif %}"> <!-- Bonus Poin -->
                     <form action="{% url 'main:remove_product' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -64,7 +64,7 @@
             display: inline-block;
         }
 
-        .last-product {
+        .last-product { 
             background-color: green;
         }
     </style>
