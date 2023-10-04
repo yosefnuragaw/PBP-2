@@ -4,33 +4,91 @@
     <title>Register</title>
 {% endblock meta %}
 
-
 {% block content %}  
 
-<div class = "login">
-    
-    <h1>Register</h1>  
+<div class="container">
+    <div class="card register-card">
+        <h1>Register</h1>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
+        <form method="POST" class="input-container">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+                <tr>
                     <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
+                    <td colspan="2" class="btn-container">
+                        <button type="submit" class="btn btn-primary">Daftar</button>
+                        <a href="{% url 'main:login' %}" class="btn btn-primary">Kembali</a>
+                    </td>
+                </tr>
+            </table>
         </form>
 
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
 
-</div>  
+<style type="text/css">
+    body {
+        background-image: url("https://images.unsplash.com/photo-1696351383130-f3c9ed9e1bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat : no-repeat;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: flex-start; /* Move content to the left */
+        align-items: center;
+    }
+    
+    .card.register-card {
+        max-width: 600px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 35px;
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        margin: auto; /* Center the card vertically */
+    }
 
+    .helptext{
+        display: none;
+    }
+    .card.register-card h1 {
+        font-family: 'Pixelify Sans', cursive;
+    }
+
+    .btn-container {
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+}
+
+.btn {
+    margin: 5px;
+    transition: background-color 0.3s, padding 0.3s;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: green;
+}
+.btn:hover {
+    background-color: green;
+    color: whitesmoke;
+}   
+
+</style>
 
 {% endblock content %}

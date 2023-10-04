@@ -3,67 +3,69 @@
 {% block content %}
     <h1>GAME STORE</h1>
     
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+    <h5>Name: {{name}}</h5>
 
     <h5>Sesi terakhir login: {{ last_login }}</h5>
 
-    <h5>Current Game Stock: {{stock}}</h5> <!--Bonus  Poin-->
-    <table>
-        <tr>
-            <th>Remove</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Date Added</th>
-            <th>Add </th>
-            <th>Sell </th>
-        </tr>
-    
-        {% comment %} Stok Game yang tersedia {% endcomment %}
-    
+    <h5>Current Game Stock: {{stock}}</h5> <!-- Bonus Poin -->
+
+    <div class="row">
         {% for product in products %}
-            <tr>
-                <td><form action="{% url 'main:remove_product' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit">delete</button>
+            <div class="col-md-4">
+                <div class="card product-card {% if forloop.last %}last-product{% endif %}">
+                    <form action="{% url 'main:remove_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                </td>
-                <td>{{product.name}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.amount}}</td>
-                <td>{{product.date_added}}</td>
-                <td><form action="{% url 'main:add_product' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit">+</button>
+                    <h3>{{product.name}}</h3>
+                    <p>Price: {{product.price}}</p>
+                    <p>Description: {{product.description}}</p>
+                    <p>Amount: {{product.amount}}</p>
+                    <p>Date Added: {{product.date_added}}</p>
+                    <form action="{% url 'main:add_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-success">+</button>
                     </form>
-                </td>
-                <td><form action="{% url 'main:sell_product' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit">-</button>
+                    <form action="{% url 'main:sell_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-warning">-</button>
                     </form>
-                </td>
-            </tr>
+                </div>
+            </div>
         {% endfor %}
-    </table>
-    
-    <br />
-    
+    </div>
+
     <a href="{% url 'main:create_product' %}">
-        <button>
+        <button class="btn btn-primary">
             Add New Product
         </button>
     </a>
 
     <a href="{% url 'main:logout' %}">
-        <button>
+        <button class="btn btn-secondary">
             Logout
         </button>
     </a>
     
+    <style>
+        .product-card {
+            max-width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .product-card form {
+            display: inline-block;
+        }
+
+        .last-product {
+            background-color: green;
+        }
+    </style>
 {% endblock content %}

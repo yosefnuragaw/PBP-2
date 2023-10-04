@@ -613,3 +613,380 @@ def logout_user(request):
 1. Melakukan register pada aplikasi
 2. Melakukan create_product sebanyak 3 kali
 3. Mungulangi tahap 1 dan 2 sebanyak 2 kali
+
+# Tugas 5
+## Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+### 1. Universal selector
+Selector yang memilih seluruh elemen tanpa pengecualian yang biasanya dilakukan dengan
+```css
+{ 
+    margin: 0;
+}
+```
+### 2. ID Selector
+Selector yang memilih sebuah tag HTML yang memiliki atribut ID di dalamnya sehingga dapat memilih sebuah tag secara spesifik
+```html
+<input id="login_btn" type="submit" value="Login">
+```
+```css
+#login_btn{
+    color whitesmoke;
+}
+```
+
+### 3. Class Selector
+Selector yang memilih sebuah class HTML sehingga dapat mengubah beberapa objek sekaligus yang memiliki class sama
+```html
+<input class="btn" type="submit" value="Login">
+<input class="btn" type="submit" value="Logout">
+```
+```css
+.btn{
+    color whitesmoke;
+}
+```
+
+### 4. Atribute selector
+Selector yang memilih sesuai dengan atribut yang dimiliki oleh sebuah tag.
+```html
+<button type="submit" class="btn btn-danger">Delete</button>
+```
+```css
+button[type=submit]{
+    color whitesmoke;
+}
+```
+### 5. Element selector
+Selector yang memilih sesuai dengan tag html
+```html
+<input class="btn" type="submit" value="Login">
+<input class="btn" type="submit" value="Logout">
+```
+```css
+input{
+    color whitesmoke;
+}
+```
+### 6. Pseudo class selector
+Selector yang memilih berdasarkan keadaan web saat ini salah satu contohnya hover yang memberi desain saat pengguna menggerakan mousenya pada objekyang dituju
+```html
+<a class="btn register_btn" href="{% url 'main:register' %}">Register</a>
+```
+```css
+.btn:hover {
+    color: whitesmoke;
+}
+```
+
+## HTML5 Tag
+### <header>
+<header> berfungsi untuk menetapkan bagian teratas atau kepala dari suatu elemen atau dokumen HTML. Biasanya, bagian ini memuat elemen-elemen seperti judul, logo, navigasi, dan elemen penting lain yang terkait dengan bagian atas dari halaman web.
+
+### <nav>
+<nav> digunakan untuk menentukan bagian navigasi dari suatu dokumen atau elemen HTML. Di dalamnya terdapat tautan atau link yang membantu pengguna untuk berpindah antara halaman atau bagian dari situs web.
+
+### <section>
+<section> mengelompokkan konten yang memiliki tema serupa dalam suatu dokumen HTML. Contohnya adalah artikel atau bagian dari artikel. Biasanya, tag <section> dimanfaatkan untuk memisahkan konten agar lebih mudah dipahami.
+
+### <article>
+<article> digunakan untuk mengelompokkan konten yang bersifat mandiri, independen, atau dapat berdiri sendiri. Sebuah artikel bisa berupa berita, posting blog, ulasan, atau konten mandiri lainnya.
+
+### <aside>
+<aside> digunakan untuk menandai konten yang berkaitan dengan konten utama dalam suatu dokumen, namun bisa berdiri sendiri. Biasanya, <aside> digunakan untuk elemen seperti sidebar atau informasi terkait yang tidak terlalu penting untuk konten utama.
+
+### <footer>
+<footer> mendefinisikan bagian bawah dari dokumen atau elemen HTML. Biasanya, di dalamnya terdapat informasi seperti hak cipta, tautan ke halaman lain, atau informasi kontak.
+
+### <main>
+<main> menandai konten utama dari sebuah dokumen HTML. Hanya boleh ada satu elemen <main> dalam satu halaman, dan elemen ini tidak boleh diletakkan dalam elemen <article>, <aside>, atau <header>.
+
+### <figure>  
+<figure> digunakan untuk mengelompokkan elemen seperti gambar, ilustrasi, diagram, atau kode
+
+## Perbedaan Margin dan Padding
+### Margin
+Margin adalah ruang kosong di sekeliling elemen yang tidak memiliki warna (kosong) sehingga tidak mempengaruhi elemen lain di sekitarnya
+```css
+.element {
+  margin: 10px; 
+}
+```
+### Padding
+Padding adalah ruang di antara batas elemen dan kontennya sehingga menciptakan ruang kosong di dalam eleemen yang tidak berpengaruh padabackground ataupun warna
+```css
+.element {
+  padding: 10px; 
+}
+```
+
+### Perbedaan
+Dikarenakan Margin terletak di luar elemen maka hanya mempengaruhi jarak elemen dengan elemen lain, sedangkan padding yang berada di dalam elemen mempengaruhi bagaimana elemen tersebut ditempatkan
+
+### Perbedaan tailwind dan bootstrap
+tailwind dan bootstrap adalah sebuah framework yang digunakan dalam pengembangan web. Terdapat perbedaan pada kedua framework tersebut yakni
+| Tailwind | Bootstrap |
+| -------- | -------- |
+| Membuat  tampilan dengan menggabungkan kelas-kelas utilitas yang sudah didefinisikan.   | Dapat menggunakan gaya atau komponen tampilan secara langsung.   |
+| Ukuran file CSS lebih kecil   | Ukuran file CSS  lebih besar   |
+| Fleksibilitas dan adaptabilitas tinggi   | Kurang fleksibel karena karena menggunakan komponen yang telah didefinisikan.   |
+| Pembelajaran yang lebih curam karena memerlukan pemahaman terhadap kelas-kelas utilitas yang tersedia  | Pembelajaran yang lebih cepat untuk pemula |
+
+Pada dasarnya kedua framework baik digunakan namun tepat jika dalam beberapa kondisi. Apabila ingin membangun sebuah web yang fleksibel dan tampilannya dikontrol sesuai yang kita inginkan maka menggunakan tailwind adalah pilihan yang tepat. Penggunaan bootstrap tepat jika pembuatan web perlu diselesaikan dalam waktu yang singkat dengan tampilan dan perilaku yang konsisten.
+
+
+## Langkah langkah menerapkan checklist
+1. Menginstall bootstrap pada base template dan font yang digunakan
+```html
+...
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+...
+```
+2. Mengubah beberapa html pada `login.html`,`.register.html`, `main.html`
+### login
+```html
+<div class="card login_card">
+
+    <h1>GameStock</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+            </tr>
+                    
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="btn-container">
+                    <input class="btn login_btn" type="submit" value="Login">
+                    <a class="btn register_btn" href="{% url 'main:register' %}">Register</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+```
+### register
+```html
+<div class="container">
+    <div class="card register-card">
+        <h1>Register</h1>
+
+        <form method="POST" class="input-container">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+                <tr>
+                    <td></td>
+                    <td colspan="2" class="btn-container">
+                        <button type="submit" class="btn btn-primary">Daftar</button>
+                        <a href="{% url 'main:login' %}" class="btn btn-primary">Kembali</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+```
+### main
+```html
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card product-card {% if forloop.last %}last-product{% endif %}">
+                    <form action="{% url 'main:remove_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <h3>{{product.name}}</h3>
+                    <p>Price: {{product.price}}</p>
+                    <p>Description: {{product.description}}</p>
+                    <p>Amount: {{product.amount}}</p>
+                    <p>Date Added: {{product.date_added}}</p>
+                    <form action="{% url 'main:add_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-success">+</button>
+                    </form>
+                    <form action="{% url 'main:sell_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-warning">-</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'main:create_product' %}">
+        <button class="btn btn-primary">
+            Add New Product
+        </button>
+    </a>
+
+    <a href="{% url 'main:logout' %}">
+        <button class="btn btn-secondary">
+            Logout
+        </button>
+    </a>
+```
+3. Menambahkan `<style></style>` pada `login.html`,`.register.html`, `main.html`
+### login
+```css
+<style type="text/css">
+    body {
+        background-image: url("https://images.unsplash.com/photo-1696351383130-f3c9ed9e1bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat : no-repeat;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        
+    .card.login_card {
+        max-width: 300px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 35px;
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        text-align: center; /* Center text within the card */
+        margin: auto; /* Center the card on the page */
+    }
+
+    .card.login_card h1 {
+        font-family: 'Pixelify Sans', cursive;
+    }
+
+    .btn-container {
+        text-align: center; /* Center buttons within the container */
+    }
+
+    .btn {
+        margin: 5px; /* Add some space between buttons */
+        transition: background-color 0.3s, padding 0.3s; 
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: green;
+    }
+    .btn:hover {
+        background-color: green; /* Change to blue on hover */
+        color: whitesmoke;
+         /* Increase padding on hover */
+    }
+</style>
+```
+### register
+```css
+<style type="text/css">
+    body {
+        background-image: url("https://images.unsplash.com/photo-1696351383130-f3c9ed9e1bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat : no-repeat;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: flex-start; /* Move content to the left */
+        align-items: center;
+    }
+    
+    .card.register-card {
+        max-width: 600px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 35px;
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        margin: auto; /* Center the card vertically */
+    }
+
+    .helptext{
+        display: none;
+    }
+    .card.register-card h1 {
+        font-family: 'Pixelify Sans', cursive;
+    }
+
+    .btn-container {
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+}
+
+.btn {
+    margin: 5px;
+    transition: background-color 0.3s, padding 0.3s;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: green;
+}
+.btn:hover {
+    background-color: green;
+    color: whitesmoke;
+}   
+
+</style>
+```
+### main
+```css
+    <style>
+        .product-card {
+            max-width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .product-card form {
+            display: inline-block;
+        }
+
+        .last-product {
+            background-color: green;
+        }
+    </style>
+```

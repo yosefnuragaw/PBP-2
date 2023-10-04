@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
-
 {% block meta %}
     <title>Login</title>
 {% endblock meta %}
-
 {% block content %}
 
-<div class = "login">
+<div class="card login_card">
 
-    <h1>Login</h1>
+    <h1>GameStock</h1>
 
     <form method="POST" action="">
         {% csrf_token %}
@@ -24,8 +22,10 @@
             </tr>
 
             <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
+                <td colspan="2" class="btn-container">
+                    <input class="btn login_btn" type="submit" value="Login">
+                    <a class="btn register_btn" href="{% url 'main:register' %}">Register</a>
+                </td>
             </tr>
         </table>
     </form>
@@ -38,8 +38,57 @@
         </ul>
     {% endif %}     
         
-    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-
 </div>
 
+<style type="text/css">
+    body {
+        background-image: url("https://images.unsplash.com/photo-1696351383130-f3c9ed9e1bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80");
+        background-size: cover; 
+        background-position: center; 
+        background-repeat : no-repeat;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        
+    .card.login_card {
+        max-width: 300px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 35px;
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.45);
+        box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        text-align: center; /* Center text within the card */
+        margin: auto; /* Center the card on the page */
+    }
+
+    .card.login_card h1 {
+        font-family: 'Pixelify Sans', cursive;
+    }
+
+    .btn-container {
+        text-align: center; /* Center buttons within the container */
+    }
+
+    .btn {
+        margin: 5px; /* Add some space between buttons */
+        transition: background-color 0.3s, padding 0.3s; 
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: green;
+    }
+    .btn:hover {
+        background-color: green; /* Change to blue on hover */
+        color: whitesmoke;
+         /* Increase padding on hover */
+    }
+</style>
 {% endblock content %}
