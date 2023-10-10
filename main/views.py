@@ -16,6 +16,11 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
 
+#Tugas 6
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseNotFound
+from django.urls import reverse
+
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
@@ -128,3 +133,38 @@ def remove_product(request): #Bonus
             pass
 
     return redirect('main:show_main')
+
+# Tugas 6
+def get_product_json(request):
+    product_item = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        amount = request.POST.get("amount")
+        user = request.user
+
+        new_product = Product(name=name, price=price, description=description, amount = amount,user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def del_product_ajax(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            product.delete()
+        except Product.DoesNotExist:
+            pass
+
+        return HttpResponse(b"DELETED", status=201)
+
+    return HttpResponseNotFound()

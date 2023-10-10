@@ -3,10 +3,11 @@ Nama    : Yosef Nuraga Wicaksana
 NPM     : 2206082751
 Kelas   : PBP C
 
-[Tugas 2](#tugas-2)
-[Tugas 3](#tugas-3)
-[Tugas 4](#tugas-4)
-[Tugas 5](#tugas-5)
+## [Tugas 2](#tugas-2)
+## [Tugas 3](#tugas-3)
+## [Tugas 4](#tugas-4)
+## [Tugas 5](#tugas-5)
+## [Tugas 6](#tugas-6)
 
 
 # Tugas 2 
@@ -991,3 +992,193 @@ Pada dasarnya kedua framework baik digunakan namun tepat jika dalam beberapa kon
         }
     </style>
 ```
+
+# Tugas 6
+## Perbedaan antara asynchronous programming dengan synchronous programming. 
+Perbedaan antara asynchronus programming dengan synchronus programming dalam konteks web terletak pada perbedaan cara pemrosesannya. Sebuah web yang menggunakan synchronus programming menjadikan client harus menunggu server untuk memroses terlebih dahulu request yang dikirimkan oleh user karena pemrosesan dilakukan menggunakan satu thread. Sedangkan untuk asynchronus, program tidak dijalankan dengan menggunakan satu thread saja melainkan dapat dieksekusi secara bersamaan. Hal ini menjadikan web tetap dapat menampilkan thread lain walaupun terdapat pemrosesan sebuah thread request user.
+
+source: https://community.algostudio.net/memahami-synchronous-dan-asynchronous-dalam-pemrograman/ 
+
+## Paradigma event-driven programming
+Paradigma event-driven programming merupakan pendekatan pada sebuah perangakat lunak ataupun web yang dipengaruhi oleh peristiwa (event) yang terjadi selama berinteraksi dengan pengguna. Untuk menangani event tersebut maka diperlukanlah sebuah event handler yang berfungsi untuk menangani peristiwa tersebut yang berbeda dari thread program utama sehingga terjadi sebuah asynchronus programming dalam event handler. Berakhirnya event handler ditandai dengan adanya callback function untuk kembali ke thread program utama.
+
+## Penerapan asynchronous programming pada AJAX
+
+Penerapan asynchronus programming pada AJAX terletak dalam kemampuannya untuk menmroses beberapa thread dalam sebuah web server tanpa memblokir thread satu sama lain. Hal ini dapat dilakukan karena javascript dapat mengolah permintaan pengguna dan menerima hasilnya tanpa memberhentikan thread utama dalam program web sehingga perubahan tidak perlu dilakukan dengan refresh web.
+
+## Fetch API dan JQuery
+### Fetch API
+1. Fetch API adalah API modern dalam JavaScript yang menyediakan antarmuka untuk melakukan permintaan HTTP dan mengelola responsnya
+2. Memerlukan polifil atau transpiler pada beberapa browser kuno karena tidak compatible.
+3. Menggunakan Promise untuk mengelola respons dan error, yang membuat kodenya lebih bersih dan mudah dipahami.
+### JQuery
+1. jQuery adalah pustaka JavaScript yang memudahkan penggunaan dan manipulasi DOM, termasuk melakukan permintaan HTTP menggunakan teknik yang dikenal sebagai Ajax
+2. Kompatibel dengan banyak browser, termasuk versi yang lebih lama.
+3. Ketergantungan pada JQuery menyebabkan dapat  performa situs web menurun.
+
+### Pilihan antara keduanya
+Jika diminta mengenai pendapat terhadap dua hal tersebut saya lebih memilih untuk menggunakan Fetch API yang merupakan teknologi terbaru sehingga menghadirkan web dengan performa yang efisian dan dengan kompabilitas pada mayoritas browser saat kini.
+
+## Langkah tugas 6
+1. Tambahkan fitur ajax untuk add product dan delete dalam `views.py` seperti pada potongan kode berikut:
+
+```python
+def get_product_json(request):
+    product_item = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        amount = request.POST.get("amount")
+        user = request.user
+
+        new_product = Product(name=name, price=price, description=description, amount = amount,user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def del_product_ajax(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            product.delete()
+        except Product.DoesNotExist:
+            pass
+
+        return HttpResponse(b"DELETED", status=201)
+
+    return HttpResponseNotFound()
+```
+2. Hubungkan fungsi tambahan dari `views.py` dengan `urls.py` dengan menambahkan path
+```python
+...
+    path('get-product/', get_product_json, name='get_product_json'),
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
+    path('delete-product-ajax/', del_product_ajax, name='del_product_ajax')
+...
+```
+3. Tambahkan modal sebagai tampilan baru untuk menambah produk dalam web
+```html
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                            <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+3. Hapus `row card` pada `main.html` karena akan digantikan menggunakan javascript
+```html
+ <div class="row" id = "ItemCard"></div>
+ ```
+
+ 4. Tambahkan script berikut untuk menangani sebuah event secara asynchronus
+ ```html
+ <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+        async function refreshProducts() {
+        document.getElementById("ItemCard").innerHTML = ""
+            const products = await getProducts()
+            let htmlString = ``
+            let totalAmount = 0;
+            products.forEach((item,index) => {
+                htmlString += 
+                `\n<div class="col-md-4">
+                <div class="card product-card ${index === products.length - 1 ? 'last-product' : ''}"> <!-- Bonus Poin -->
+                    <h3>${item.fields.name}</h3>
+                    <p>Price: ${item.fields.price}</p>
+                    <p>Description: ${item.fields.description}</p>
+                    <p>Amount: ${item.fields.amount}</p>
+                    <p>Date Added: ${item.fields.date_added}</p>
+                    
+                    <form action="{% url 'main:add_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="${item.pk}">
+                        <button type="submit" class="btn btn-success">+</button>
+                    </form>
+                    <form action="{% url 'main:sell_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="${item.pk}">
+                        <button type="submit" class="btn btn-warning">-</button>
+                    </form>
+                        <input type="button" id= "del_button" class="btn btn-danger" value="Delete" onclick ="delProduct(${item.pk})">
+                </div>
+            </div>` 
+            totalAmount += item.fields.amount
+            })
+            
+            document.getElementById("ItemCard").innerHTML = htmlString
+            document.getElementById("currentStock").innerText = `Current Game Stock: ${totalAmount}`;
+        }
+        refreshProducts()
+
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+        document.getElementById("button_add").onclick = addProduct
+    
+        function delProduct(key) {
+            const formData = new FormData();
+            formData.append('product_id', key);
+            fetch("{% url 'main:del_product_ajax' %}", {
+                method: "POST",
+                body: formData
+            }).then(refreshProducts)
+            
+            document.getElementById("form").reset()
+            return false
+        }
+    </script>
+ ```
+ Penjelasan:
+    `refreshProduct()` untuk melakukan refresh pada menampilkan produk produk dalam penyimpanan
+    `addProduct()` untuk menambahkan produk  kedalam inventory user
+    `delProduct()` untuk menghapus product dari inventory user
+
+5. Melakukan collect static untuk mengumpulkan berbagai static file dalam project
+
+6. Melakukan deployment ke PaaS Fasilkom

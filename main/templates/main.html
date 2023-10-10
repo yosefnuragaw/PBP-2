@@ -1,54 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>GAME STORE</h1>
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                            <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">GameStock</a>
+        <a class="navbar-brand">{{name}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href=""  data-bs-toggle="modal" data-bs-target="#addModal">Add Game</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:logout' %}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     
-    <h5>Name: {{name}}</h5>
 
     <h5>Sesi terakhir login: {{ last_login }}</h5>
 
-    <h5>Current Game Stock: {{stock}}</h5> <!-- Bonus Poin -->
+    <h5 id="currentStock">Current Game Stock: {{stock}}</h5> <!-- Bonus Poin -->
 
-    <div class="row">
-        {% for product in products %}
-            <div class="col-md-4">
-                <div class="card product-card {% if forloop.last %}last-product{% endif %}"> <!-- Bonus Poin -->
-                    <form action="{% url 'main:remove_product' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                    <h3>{{product.name}}</h3>
-                    <p>Price: {{product.price}}</p>
-                    <p>Description: {{product.description}}</p>
-                    <p>Amount: {{product.amount}}</p>
-                    <p>Date Added: {{product.date_added}}</p>
-                    <form action="{% url 'main:add_product' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <button type="submit" class="btn btn-success">+</button>
-                    </form>
-                    <form action="{% url 'main:sell_product' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <button type="submit" class="btn btn-warning">-</button>
-                    </form>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    <a href="{% url 'main:create_product' %}">
-        <button class="btn btn-primary">
-            Add New Product
-        </button>
-    </a>
-
-    <a href="{% url 'main:logout' %}">
-        <button class="btn btn-secondary">
-            Logout
-        </button>
-    </a>
+    <div class="row" id = "ItemCard"></div>
+    
     
     <style>
         .product-card {
@@ -65,7 +81,72 @@
         }
 
         .last-product { 
-            background-color: green;
+            background-color: grey;
         }
     </style>
+
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+        async function refreshProducts() {
+        document.getElementById("ItemCard").innerHTML = ""
+            const products = await getProducts()
+            let htmlString = ``
+            let totalAmount = 0;
+            products.forEach((item,index) => {
+                htmlString += 
+                `\n<div class="col-md-4">
+                <div class="card product-card ${index === products.length - 1 ? 'last-product' : ''}"> <!-- Bonus Poin -->
+                    <h3>${item.fields.name}</h3>
+                    <p>Price: ${item.fields.price}</p>
+                    <p>Description: ${item.fields.description}</p>
+                    <p>Amount: ${item.fields.amount}</p>
+                    <p>Date Added: ${item.fields.date_added}</p>
+                    
+                    <form action="{% url 'main:add_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="${item.pk}">
+                        <button type="submit" class="btn btn-success">+</button>
+                    </form>
+                    <form action="{% url 'main:sell_product' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="${item.pk}">
+                        <button type="submit" class="btn btn-warning">-</button>
+                    </form>
+                        <input type="button" id= "del_button" class="btn btn-danger" value="Delete" onclick ="delProduct(${item.pk})">
+                </div>
+            </div>` 
+            totalAmount += item.fields.amount
+            })
+            
+            document.getElementById("ItemCard").innerHTML = htmlString
+            document.getElementById("currentStock").innerText = `Current Game Stock: ${totalAmount}`;
+        }
+        refreshProducts()
+
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+        document.getElementById("button_add").onclick = addProduct
+    
+        function delProduct(key) {
+            const formData = new FormData();
+            formData.append('product_id', key);
+            fetch("{% url 'main:del_product_ajax' %}", {
+                method: "POST",
+                body: formData
+            }).then(refreshProducts)
+            
+            document.getElementById("form").reset()
+            return false
+        }
+    </script>
 {% endblock content %}
+
